@@ -17,6 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController'); //nao tem @alguma_action porque o __invoke() está setado
 Route::view('/teste', 'teste');
 
+Route::prefix('/tarefas')->group(function(){
+    Route::get('/', 'TarefasController@list'); //listagem de tarefas
+    
+    Route::get('add', 'TarefasController@add'); // tela para adiconar nova tarefa (somente view)
+    Route::post('add', 'TarefasController@addAction'); //ação de adição de add (por isso é POST)
+
+    Route::get('edit/{id}', 'TarefasController@edit'); //tela de edição
+    Route::post('edit/{id}', 'TarefasController@editAction'); //ação de adição
+
+    Route::get('delete/{id}', 'TarefasController@del'); //ação de deletar 
+
+    Route::get('marcar/{id}','TarefasController@done'); //marcar resilvido ou não resolvido
+
+});
+
+
 
 Route::prefix('/config')->group(function(){
 
