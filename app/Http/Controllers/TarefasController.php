@@ -20,7 +20,7 @@ class TarefasController extends Controller{
         return view('tarefas.add');
     }
     public function addAction(Request $request){
-        if($request->filled('title')){
+        if($request->filled('title')) {
             $title = $request->input('title');
             
             DB::insert('INSERT INTO tarefas (titulo) VALUES (:titulo)', [
@@ -30,7 +30,9 @@ class TarefasController extends Controller{
             return redirect()->route('tarefas.list');
 
         } else {
-
+            return redirect()
+            ->route('tarefas.add')
+            ->with('warning', 'Você não preencheu o título');
         }
     }
 
