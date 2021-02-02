@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TarefasController extends Controller{
     
     public function list(){
-        return view('tarefas.list');
+        $list = DB::select('SELECT * FROM tarefas');
+
+        return view('tarefas.list', [
+            'list' => $list 
+        ]);
     }
 
 
