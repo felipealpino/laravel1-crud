@@ -6,13 +6,13 @@
 @section('content')
     <h1> listagem de tarefas </h1>
 
-    <a href="">Adicionar nova tarefa</a>
+    <a href="{{route('tarefas.add')}}">Adicionar nova tarefa</a>
 
     @if(count($list) > 0)
         <ul>
         @foreach ($list as $item)
             <li>
-                <a href=""> [@if ($item->resolvido === 1)
+                <a href="{{ route('tarefas.done', ['id'=>$item->id]) }}"> [@if ($item->resolvido === 1)
                     Desmarcar
                 @else
                     Marcar
@@ -21,8 +21,8 @@
                 {{$item->titulo}}
 
 
-                <a href="">[ editar ]</a>
-                <a href="">[ excluir ]</a>
+                <a href="{{ route('tarefas.edit', ['id'=>$item->id]) }}">[ editar ]</a>
+                <a href="{{ route('tarefas.del', ['id'=>$item->id]) }}">[ excluir ]</a>
 
             </li>
         @endforeach
