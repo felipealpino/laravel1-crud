@@ -82,8 +82,39 @@ class TarefasController extends Controller{
     }
 
 
-    public function done(){
+    public function done($id){
 
+        /*opção 1: select + update
+            $data = DB::select('SELECT * FROM tarefas WHERE id = :id', [
+                'id' => $id
+            ]); 
+            $res = 0;
+            if(count($data) > 0){ 
+                if($data[0]->resolvido === 0){
+                    $res = 1;
+                }
+            }
+
+            DB::update('UPDATE tarefas SET resolvido = :resolvido WHERE id = :id',[
+                'resolvido' => $res,
+                'id' => $id
+            ]);
+        */
+
+        //opção 2: update matemático
+            DB::update('UPDATE tarefas SET resolvido = 1 - resolvido WHERE id = :id', [
+                'id' => $id
+            ]);
+        /**
+         * Explicação opção2
+         * Original: 0 
+         * 1 - 0 = 1
+         * 
+         * Original: 1
+         * 1 - 1 = 0
+         */
+
+        return redirect()->route('tarefas.list');
     }
 
 
