@@ -37,11 +37,39 @@ class TarefasController extends Controller{
     }
 
 
-    public function edit(){
+    public function edit($id){
+        $data = DB::select('SELECT * FROM tarefas WHERE id = :id', [
+            'id' => $id
+        ]);
+
+        if(count($data) > 0){
+            return view('tarefas.edit', [
+                'data' => $data[0] // primeiro item da consulta (teoricamente é para ter só uma) 
+            ]);
+        } else {
+            return redirect()
+            ->route('tarefas.list')
+            ->with('warning','Impossivel editar, id não existente');
+        }
+
         return view('tarefas.edit');
     }
-    public function editAction(){
+    public function editAction(Request $request, $id){
+        if($request->filled('title')){  
+            $titulo = $request->input('title');
+            
+            DB::update('UPDATE tarefas SET titulo = :titulo WHERE id = :id', [
+                'id' => $id,
+                'titulo' => $titulo 
+            ]);
 
+            return redirect()->route('tarefas.list');           
+        
+        } else {
+            return redirect()
+            ->route('tarefas.edit', ['id'=>$id])
+            ->with('warning','Impossivel editar, o campo está vazio');
+        }
     }
 
 
