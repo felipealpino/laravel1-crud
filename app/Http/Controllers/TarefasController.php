@@ -19,21 +19,20 @@ class TarefasController extends Controller{
     public function add(){
         return view('tarefas.add');
     }
+
+
     public function addAction(Request $request){
-        if($request->filled('title')) {
-            $title = $request->input('title');
+        $request->validate([ 
+            'title' => ['required', 'string']
+        ]); 
+    
+        $title = $request->input('title');
             
-            DB::insert('INSERT INTO tarefas (titulo) VALUES (:titulo)', [
-                'titulo' => $title
-            ]);
+        DB::insert('INSERT INTO tarefas (titulo) VALUES (:titulo)', [
+            'titulo' => $title
+        ]);
 
-            return redirect()->route('tarefas.list');
-
-        } else {
-            return redirect()
-            ->route('tarefas.add')
-            ->with('warning', 'Você não preencheu o título');
-        }
+        return redirect()->route('tarefas.list');
     }
 
 
@@ -55,21 +54,19 @@ class TarefasController extends Controller{
         return view('tarefas.edit');
     }
     public function editAction(Request $request, $id){
-        if($request->filled('title')){  
-            $titulo = $request->input('title');
-            
-            DB::update('UPDATE tarefas SET titulo = :titulo WHERE id = :id', [
-                'id' => $id,
-                'titulo' => $titulo 
-            ]);
-
-            return redirect()->route('tarefas.list');           
+        $request->validate([
+            'title' => ['required', 'string']
+        ]);
         
-        } else {
-            return redirect()
-            ->route('tarefas.edit', ['id'=>$id])
-            ->with('warning','Impossivel editar, o campo está vazio');
-        }
+        $titulo = $request->input('title');
+        
+        DB::update('UPDATE tarefas SET titulo = :titulo WHERE id = :id', [
+            'id' => $id,
+            'titulo' => $titulo 
+        ]);
+
+        return redirect()->route('tarefas.list');           
+ 
     }
 
 

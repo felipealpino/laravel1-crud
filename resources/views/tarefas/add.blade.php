@@ -7,9 +7,11 @@
 @section('content')
     <h1> Adicionando tarefas </h1>
 
-    @if (session('warning'))
+    @if ($errors->any() )
         @component('components.alert')
-            {{ session('warning') }}        
+            @foreach ($errors->all() as $error)
+                {{ $error }} <br>
+            @endforeach
         @endcomponent        
     @endif
 
