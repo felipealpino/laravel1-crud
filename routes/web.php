@@ -50,7 +50,7 @@ Route::prefix('/tarefas')->group(function(){
 
 Route::prefix('/config')->group(function(){
 
-    Route::get('/', 'Admin\ConfigController@index'); 
+    Route::get('/', 'Admin\ConfigController@index')->middleware('auth'); 
     Route::post('/', 'Admin\ConfigController@index'); 
 
     Route::get('info', 'Admin\ConfigController@info');
@@ -59,6 +59,10 @@ Route::prefix('/config')->group(function(){
 
 });
 
+Route::get('/login', function(){
+    echo 'Pagina de login';
+})->name('login');
+ 
 
 //Irá rodar o fallback quando nao encontrar nenhuma rota definida pelo programador
 Route::fallback(function(){
