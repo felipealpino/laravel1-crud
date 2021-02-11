@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::resource('todo', 'TodoController');
+/*
+GET    - /todo            - index   - todo.index   - LISTA OS ITENS
+GET    - /todo/create     - create  - todo.create  - FORM DE CRIAÇÃO
+POST   - /todo            - store   - todo.store   - RECEBER OS DADOS E ADD ITEM
+GET    - /todo/{id}       - show    - todo.show    - ITEM INDIVIDUAL
+GET    - /todo/{id}/edit  - edit    - todo.edit    - FORM DE EDIÇÃO
+PUT    - /todo/{id}       - update  - todo.update  - RECEBER OS DADOS E UPDATE ITEM
+DELETE - /todo/{id}       - destroy - todo.destroy - DELETAR O ITEM
+*/
+
+
+
 Route::get('/', 'HomeController'); //nao tem @alguma_action porque o __invoke() está setado
 Route::view('/teste', 'teste');
 
